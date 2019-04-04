@@ -1,0 +1,11 @@
+.idea/
+
+__pycache__/
+
+test-images/
+
+training-images/
+
+*.csv
+
+*.pkl
