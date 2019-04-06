@@ -5,6 +5,7 @@ import sys
 from threading import Thread
 from uploadNew import *
 from train import *
+from match_faces import *
 class window(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -25,7 +26,7 @@ class window(QMainWindow):
 
         refreshButton = QPushButton("Refresh",self)
         refreshButton.move(470,200)
-        refreshButton.clicked.connect(self.match)
+        refreshButton.clicked.connect(self.match_faces)
 
         pendingButton = QPushButton("Pending requests",self)
         pendingButton.move(470,250)
@@ -51,6 +52,11 @@ class window(QMainWindow):
     def update_DB(self):
         t = Thread(target=train)  
         t.start()   
+
+    def match_faces(self):
+        matched =  match() 
+        print(matched)
+          
 
 App = QApplication(sys.argv)
 w = window()

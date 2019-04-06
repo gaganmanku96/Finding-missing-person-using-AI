@@ -25,7 +25,6 @@ def fetch_faces_fromDB(db_name = 'user'):
     else:
         os.mkdir('images')     
     os.chdir('images')
-    print(os.getcwd())      
     result = db.reference(db_name).get()
     for userID, value in result.items():
         for case, v1 in value.items():
@@ -36,34 +35,29 @@ def fetch_faces_fromDB(db_name = 'user'):
 
 def find_key_pts():
     key_pts = []
+    # os.chdir('../')
     images = os.listdir('images')
     for image in images:
         path = os.path.join('images',image)
         img = face_recognition_api.load_image_file(path)
-        # X_faces_loc = face_recognition_api.face_locations(img)
-        # faces_encodings = face_recognition_api.face_encodings(img, known_face_locations=X_faces_loc)
         faces_encodings = face_recognition_api.face_encodings(img)
-        key_pts.append(faces_encodings)
-
-        
+        if faces_encodings:
+            key_pts.append([faces_encodings,image])
     return key_pts
 
 def match():
+    # fetch_faces_fromDB()
     key_pts = find_key_pts()
-    for key in key_pts:
+    print(key_pts)
+    matched = []
+    for key,img in key_pts:
         closest_distances = clf.kneighbors(key)
-
-        # is_recognized = [closest_distances[0][i][0] <= 0.5 for i in range(len(X_faces_loc))]
         is_recognized = [closest_distances[0][0][0] <= 0.5]
         if is_recognized:
             predictions = [(le.inverse_transform(int(pred)).title()) if rec else ("Unknown", loc) for pred, rec in
                     zip(clf.predict(key), is_recognized)]
+            matched.append([predictions,img])                     
+    return matched    
 
-            print(predictions)            
-        
-
-
-
-match()
 
 
