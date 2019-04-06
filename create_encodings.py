@@ -16,28 +16,32 @@ def convert_encoding(encoding):
     return st    
 
 def create_store(fileName,name,fname,age,mob):
-    img = face_recognition_api.load_image_file(fileName)
-    imgEncoding = face_recognition_api.face_encodings(img)
+    try:
+        img = face_recognition_api.load_image_file(fileName)
+        imgEncoding = face_recognition_api.face_encodings(img)
 
-    if len(imgEncoding) > 1:
-        print('More than one face found in the image')
-    if len(imgEncoding) == 0:
-        print('No Face found in the Image')
-    else:
-        print('Encoded successfully.')
-    encoded = convert_encoding(imgEncoding)   
+        if len(imgEncoding) > 1:
+            print('More than one face found in the image')
+        if len(imgEncoding) == 0:
+            print('No Face found in the Image')
+        else:
+            print('Encoded successfully.')
+        encoded = convert_encoding(imgEncoding)   
 
-    name = name.replace(' ','@')
-    fname = fname.replace(' ','@')
+        name = name.replace(' ','*')
+        fname = fname.replace(' ','*')
 
-    print(name)
-    print(fname)
+        print(name)
+        print(fname)
 
-    uniqueKey = str(name) + str(age) + str(fname) + str(mob)
-    print(uniqueKey)
-    
-    root = db.reference('stationID')
-    new_user = root.child('ABC123').child('pending').child(uniqueKey).set({
-        'encoded':encoded
-    })
-    print('Done')
+        uniqueKey = str(name) + '@' + str(age) + '@' + str(fname) + '@' + str(mob)
+        print(uniqueKey)
+        
+        root = db.reference('stationID')
+        new_user = root.child('ABC123').child('pending').child(uniqueKey).set({
+            'encoded':encoded
+        })
+        print('Done')
+        return "YES"
+    except:
+        return "NO"   

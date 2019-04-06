@@ -1,9 +1,10 @@
-from PyQt5.QtWidgets import QMainWindow,QFileDialog,QPushButton, QInputDialog, QLabel,QLineEdit, QErrorMessage
+from PyQt5.QtWidgets import QMainWindow,QFileDialog,QPushButton, QInputDialog, QLabel,QLineEdit, QMessageBox
 from PyQt5.QtGui import QPixmap
 import os
 import shutil
 import subprocess
 from create_encodings import *
+import time
 class uploadNewClass(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -83,27 +84,17 @@ class uploadNewClass(QMainWindow):
         self.name = self.lineName.text()
         self.fname = self.lineFName.text()
 
-        # if(imageComiled) print('Image not compiled')
-        # if(self.name==""):
-        #     error_dialog = QErrorMessage()
-        #     error_dialog.showMessage("Name cannot be empty")
-        #     error_dialog.show()
-        # if(self.age==""):
-        #     error_dialog = QErrorMessage()
-        #     error_dialog.showMessage("Name cannot be empty")
-
-        # if(self.locale==""):
-        #     error_dialog = QErrorMessage()
-        #     error_dialog.showMessage("Name cannot be empty")
-
-        
+               
         self.compile()
 
     
        
     def compile(self):
-        create_store(self.fileName,self.name,self.fname,self.mob,self.age)
-
+        s = create_store(self.fileName,self.name,self.fname,self.mob,self.age)
+        if s=="YES":
+            QMessageBox.about(self,"Success","Image is addes to DB\nYou can close the window")
+        else:
+            QMessageBox.about(self,"Error","Something went wrong\nPlease try again")
 
     def openFileNameDialog(self):    
         options = QFileDialog.Options()

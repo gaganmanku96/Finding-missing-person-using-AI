@@ -6,16 +6,9 @@ import os
 import pickle
 import face_recognition_api
 import warnings
+from train import *
 
 model_name = 'classifier.pkl'
-
-if os.path.isfile(model_name):
-    with open(model_name, 'rb') as f:
-        (le, clf) = pickle.load(f)
-else:
-    print("Classifier '{}' does not exist".format(model_name))
-    quit()
-
 
 
 def fetch_faces_fromDB(db_name = 'user'):
@@ -46,18 +39,23 @@ def find_key_pts():
     return key_pts
 
 def match():
+
+    if os.path.isfile(model_name):
+        with open(model_name, 'rb') as f:
+            (le, clf) = pickle.load(f)
+    else:
+        print("Classifier '{}' does not exist".format(model_name))
+        print("Update DB first")
+
     # fetch_faces_fromDB()
+    
     key_pts = find_key_pts()
-    print(key_pts)
     matched = []
     for key,img in key_pts:
         closest_distances = clf.kneighbors(key)
         is_recognized = [closest_distances[0][0][0] <= 0.5]
         if is_recognized:
-            predictions = [(le.inverse_transform(int(pred)).title()) if rec else ("Unknown", loc) for pred, rec in
-                    zip(clf.predict(key), is_recognized)]
+            predictions = [(le.inverse_transform(int(pred)).title()) if rec else ("Unknown") for pred, rec in
+                    zip(clf.predict(key), is_recognized)]       
             matched.append([predictions,img])                     
     return matched    
-
-
-
