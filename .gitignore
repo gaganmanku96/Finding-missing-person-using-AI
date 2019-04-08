@@ -9,3 +9,7 @@ training-images/
 *.csv
 
 *.pkl
+
+key.json
+
+*png

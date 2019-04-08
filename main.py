@@ -24,11 +24,11 @@ class window(QMainWindow):
         uploadButton.move(470,100)
         uploadButton.clicked.connect(self.upload)
 
-        updateClsButton = QPushButton("Update\n Database",self)
+        updateClsButton = QPushButton("Update\n Classifier",self)
         updateClsButton.move(470,150)
         updateClsButton.clicked.connect(self.update_DB)
 
-        refreshButton = QPushButton("Refresh",self)
+        refreshButton = QPushButton("Match",self)
         refreshButton.move(470,200)
         refreshButton.clicked.connect(self.match_faces)
 
