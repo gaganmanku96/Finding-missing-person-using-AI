@@ -114,6 +114,7 @@ class window(QMainWindow):
                                     "\n  Mobile                 : "+mobile+
                                     "\n  Location             : "+loc     )
                 
+                print(os.getcwd(),img_)
                 icon = QPixmap(os.path.join('images',img_))
 
                 item1.setIcon(QIcon(icon))               

@@ -7,6 +7,8 @@ import pickle
 import face_recognition_api
 import warnings
 from train import *
+import warnings
+warnings.filterwarnings('ignore')
 
 model_name = 'classifier.pkl'
 
@@ -23,7 +25,7 @@ def fetch_faces_fromDB(db_name = 'user'):
         for case, v1 in value.items():
             imgdata = base64.b64decode(v1.get('image'))
             location = v1.get('location')
-            filename = case + str(time.time())[:5]+location+'.jpg' # I assume you have a way of picking unique filenames
+            filename = case + str(time.time())[:5]+location+'.png' # I assume you have a way of picking unique filenames
             with open(filename, 'wb') as f:
                 f.write(imgdata)
             
@@ -45,6 +47,7 @@ def find_key_pts():
         l = l.split(',')
         image = l[0]
         loc = l[1]
+        
         path = os.path.join('images',image)
         img = face_recognition_api.load_image_file(path)
         faces_encodings = face_recognition_api.face_encodings(img)
@@ -61,7 +64,6 @@ def match():
         print("Classifier '{}' does not exist".format(model_name))
         print("Update DB first")
 
-    print(os.getcwd())
     fetch_faces_fromDB()
     
     key_pts = find_key_pts()
