@@ -77,7 +77,10 @@ class window(QMainWindow):
             })
 
             #Delete from pending
-            # root.child('ABC123').child('pending').delete(label[0])
+            try:
+                deleted = root.child('ABC123').child('pending').child(label[0]).delete()
+            except Exception as e:
+                print(e)    
 
     def match_faces(self):
         matched =  match()

@@ -23,7 +23,7 @@ def fetch_faces_fromDB(db_name = 'user'):
         for case, v1 in value.items():
             imgdata = base64.b64decode(v1.get('image'))
             location = v1.get('location')
-            filename = case + str(time.time())[:5]+'.jpg' # I assume you have a way of picking unique filenames
+            filename = case + str(time.time())[:5]+location+'.jpg' # I assume you have a way of picking unique filenames
             with open(filename, 'wb') as f:
                 f.write(imgdata)
             
