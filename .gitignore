@@ -13,3 +13,5 @@ training-images/
 *.json
 
 *.png
+
+.vscode/
