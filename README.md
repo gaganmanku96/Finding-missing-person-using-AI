@@ -1,5 +1,8 @@
 # Finding Missing people through AI
 
+## V2 with code optimization is coming soon.
+## Please read the LICENCE before using this project.
+
 Machine Learning project to find people from an Image.
 
 Lets Image a senario
