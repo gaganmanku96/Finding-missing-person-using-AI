@@ -5,6 +5,4 @@ training-images/
 *.csv
 *.pkl
 *.json
-*.jpg
-*.png
 .vscode/
