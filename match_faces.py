@@ -1,78 +1,60 @@
-from connect_DB import *
 import base64
-import cv2
 import time
 import os
 import pickle
+import warnings
+import io
+
+import cv2
+from PIL import Image
+import numpy as np
+
 import face_recognition_api
-import warnings
-from train import *
-import warnings
-warnings.filterwarnings('ignore')
+from train_model import *
+from db_operations import *
+
 
 model_name = 'classifier.pkl'
 
 
-def fetch_faces_fromDB(db_name = 'user'):
-    data = {}
-    if os.path.exists('images'):
-        pass
-    else:
-        os.mkdir('images')     
-    os.chdir('images')
+def decode_base64(img):
+    img = img[1:]
+    img = np.array(Image.open(io.BytesIO(base64.b64decode(img))))
+    return img
+
+
+def get_facial_points(img):
+    return face_recognition_api.face_encodings(img)
+
+
+def fetch_faces_fromDB(db_name='user'):
+    data = []
     result = db.reference(db_name).get()
-    for userID, value in result.items():
-        for case, v1 in value.items():
-            imgdata = base64.b64decode(v1.get('image'))
-            location = v1.get('location')
-            filename = case + str(time.time())[:5]+location+'.png' # I assume you have a way of picking unique filenames
-            with open(filename, 'wb') as f:
-                f.write(imgdata)
-            
-            loc = 'locations.txt'
-            to_save = filename+"  "+location
-            with open(loc, 'w') as f:
-                f.write(to_save)
+    for user_id, cases in result.items():
+        for case, value in cases.items():
+            image = decode_base64(value.get('image'))
+            key_pts = get_facial_points(image)
+            location = value.get('location')
+            data.append([image, key_pts, location])
+    return data
 
-
-def find_key_pts():
-    key_pts = []
-    os.chdir('../')
-    with open('images/locations.txt','r') as f:
-        locations = f.read()
-    locations = locations.split('\n')
-
-    for l in locations:
-        l = l.replace('  ',',')
-        l = l.split(',')
-        image = l[0]
-        loc = l[1]
-        
-        path = os.path.join('images',image)
-        img = face_recognition_api.load_image_file(path)
-        faces_encodings = face_recognition_api.face_encodings(img)
-        if faces_encodings:
-            key_pts.append([faces_encodings,image,loc])
-    return key_pts
 
 def match():
-
     if os.path.isfile(model_name):
         with open(model_name, 'rb') as f:
             (le, clf) = pickle.load(f)
     else:
-        print("Classifier '{}' does not exist".format(model_name))
-        print("Update DB first")
-
-    fetch_faces_fromDB()
-    
-    key_pts = find_key_pts()
+        return "None"
     matched = []
-    for key,img,loc in key_pts:
-        closest_distances = clf.kneighbors(key)
+    data = fetch_faces_fromDB()
+    for image, key_pts, location in data:
+        closest_distances = clf.kneighbors(key_pts)
         is_recognized = [closest_distances[0][0][0] <= 0.5]
-        if is_recognized:
-            predictions = [(le.inverse_transform(int(pred)).title()) if rec else ("Unknown") for pred, rec in
-                    zip(clf.predict(key), is_recognized)]       
-            matched.append([predictions,img,loc])                     
-    return matched    
+        # No clue why 'is True' is not working
+        if is_recognized[0] == True:
+            predictions = [(le.inverse_transform([pred]))
+                           if rec else ("Unknown")
+                           for pred, rec in zip(clf.predict(key_pts),
+                                                is_recognized)]
+            matched.append([predictions, image, location])
+    return matched
