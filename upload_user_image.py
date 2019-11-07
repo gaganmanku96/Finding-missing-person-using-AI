@@ -29,7 +29,7 @@ def upload_image(base64_image):
 
 
 if __name__ == '__main__':
-    file_name = "images/salman.jpg"
+    file_name = "user_image.JPG"
     img = Image.open(file_name)
     base64_image = get_base64_form(img)
     result = upload_image(base64_image)

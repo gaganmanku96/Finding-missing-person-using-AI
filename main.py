@@ -21,12 +21,29 @@ from db_operations import add_to_confirmed, fetch_confirmed_cases, delete_from_p
 
 
 class window(QMainWindow):
+    """
+    This is the main GUI window.
+    """
     def __init__(self):
+        """
+        Title and some other initializations are done here.
+        """
         super().__init__()
         self.title = "Missing Person Application"
         self.initialize()
 
     def initialize(self):
+        """
+        This method contains all the buttons that are preset on GUI.
+
+        New Case: Whenever a new case has to be registered, this button is used.
+        Refresh: This button trains the KNN model. It downloads all the pending cases
+                    and trains a KNN model on it.
+        Match: This button downloads all the images submitted by the user and
+                tries to predict the probability of match. If any match is found then
+                it will be printed.
+        Confirmed Cases: All cases which have been confirmed will be displayed here.
+        """
         self.setWindowTitle(self.title)
         self.setFixedSize(600, 400)
 
@@ -49,15 +66,27 @@ class window(QMainWindow):
         self.show()
 
     def new_case(self):
+        """
+        New case window will open in new GUI.
+        """
         self.dialog = NewCase(self)
 
     def refresh_model(self):
+        """
+        Model will be trained on this button press.
+        All the pending cases will be downloaded from db and
+        a KNN Classifier will be trained on it.
+        """
         if train_model() is True:
             QMessageBox.about(self, "Success", "Model is trained")
         else:
             QMessageBox.about(self, "Error", "Something went wrong")
 
     def confirm(self, label, location, image):
+        """
+        This method will be automatically called whenever any match is found.
+        That case will be deleted from pending.
+        """
         img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         im_pil = Image.fromarray(img)
         buff = io.BytesIO()
@@ -67,11 +96,18 @@ class window(QMainWindow):
         delete_from_pending(label[0][0])
 
     def decode_base64(self, img):
+        """
+        Image is converted ot numpy array.
+        """
         img = img[1:]
         img = np.array(Image.open(io.BytesIO(base64.b64decode(img))))
         return img
 
     def view_confirmed_cases(self):
+        """
+        This method will be triggered when the view confirmed button will
+        be pressed on GUI.
+        """
         result = fetch_confirmed_cases()
         if result is None:
             pass
@@ -116,6 +152,12 @@ class window(QMainWindow):
             list.show()
 
     def match_from_submitted(self):
+        """
+        This method will be called when match faces button is pressed.
+        It download all data from firebase which has been submitted by user
+        and runs KNN classifier on it in prediction mode. Any match above 50%
+        threshold is shown here.
+        """
         result = match_faces.match()
         if result == []:
             QMessageBox.about(self, "No Match Till Now", "Please Pray")
