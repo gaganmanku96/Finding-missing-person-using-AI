@@ -2,6 +2,13 @@
 
 ### Please read the LICENCE before using this project.
 
+## UPDATE: V3 is in progress (to be released before mid September, 2020).
+#### New changes
+1. Support for MongoDB
+2. GUI for Mobile Application (using Kivy or PyQt5)
+3. Docker Support
+4. Performance optimizations
+
 ## Introduction
 This project is about how we can locate missing persons with the help of AI.\
 The project contains 2 different applications - 1. Desktop (build using PyQT5)\
