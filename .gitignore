@@ -9,3 +9,5 @@ training-images/
 Trees-1024x682.jpg
 missing_person.jpg
 user_image.JPG
+v3/face_encoding/models/dlib_face_recognition_resnet_model_v1.dat
+v3/face_encoding/models/shape_predictor_68_face_landmarks.dat

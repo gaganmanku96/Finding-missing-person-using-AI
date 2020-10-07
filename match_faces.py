@@ -40,15 +40,19 @@ def fetch_faces_fromDB(db_name='user'):
 
 
 def match():
+    print("match function is called")
     if os.path.isfile(model_name):
+        print("model exists")
         with open(model_name, 'rb') as f:
             (le, clf) = pickle.load(f)
+            print("Model is loaded")
     else:
-        return "None"
+        raise AttributeError("Model not available")
     matched = []
     data = fetch_faces_fromDB()
     for image, key_pts, location in data:
         closest_distances = clf.kneighbors(key_pts)
+        print(closest_distances)
         is_recognized = [closest_distances[0][0][0] <= 0.5]
         # No clue why 'is True' is not working
         if is_recognized[0] == True:
