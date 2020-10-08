@@ -62,11 +62,10 @@ class LoginWindow(QMainWindow):
                                        '&password='+self.password.text())
             login_stats = json.loads(login_stats.text)
             if login_stats['status'] == True:
-                self.app_window = AppWindow()
+                self.app_window = AppWindow(user=self.username.text())
             else:
                 QMessageBox.about(self, "Login Failed", "\nPlease try again\t\n")
 
-        
         
 
 App = QApplication(sys.argv)

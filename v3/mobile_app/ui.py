@@ -2,16 +2,17 @@ import sys
 import requests
 import base64
 import json
+import uuid
 
 from PIL import Image
 from PyQt5.QtGui import QPixmap, QImage, QImageReader
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QPushButton, QApplication
 from PyQt5.QtWidgets import QInputDialog, QLabel, QLineEdit, QMessageBox
 
-from utils import generate_uuid
+# from utils import generate_uuid
 
 
-class NewCase(QMainWindow):
+class MobileApp(QMainWindow):
     """
     This class is a subpart of main window.
     The purpose of this class is to register a new case and
@@ -34,13 +35,11 @@ class NewCase(QMainWindow):
             image -> image of the person
         """
         super().__init__()
-        self.title = "Register New Case"
+        self.title = "Submit Image"
+        self.location = None
         self.name = None
-        self.age = None
-        self.mob = None
-        self.father_name = None
+        self.mobile = None
         self.image = None
-        self.encoded_image = None
         self.key_points = None
         self.initialize()
 
@@ -56,21 +55,20 @@ class NewCase(QMainWindow):
         -> If you are chaning the window size make sure to align the buttons
             correctly.
         """
-        self.setFixedSize(800, 600)
+        self.setFixedSize(400, 700)
         self.setWindowTitle(self.title)
 
         upload_image_bt = QPushButton("Image", self)
-        upload_image_bt.move(400, 20)
+        upload_image_bt.move(150, 250)
         upload_image_bt.clicked.connect(self.openFileNameDialog)
 
         save_bt = QPushButton("Save ", self)
-        save_bt.move(400, 350)
+        save_bt.move(150, 640)
         save_bt.clicked.connect(self.save)
 
         self.get_name()
-        self.get_age()
-        self.get_fname()
-        self.get_mob()
+        self.get_mobile_num()
+        self.get_location()
         self.show()
 
     def get_name(self):
@@ -78,44 +76,33 @@ class NewCase(QMainWindow):
         This method reads the input name from text field in GUI.
         """
         self.name_label = QLabel(self)
-        self.name_label.setText('Name:')
-        self.name_label.move(420, 70)
+        self.name_label.setText('Your Name:')
+        self.name_label.move(170, 20)
 
         self.name = QLineEdit(self)
-        self.name.move(480, 70)
+        self.name.move(150, 50)
 
-    def get_age(self):
-        """
-        This method reads the age from text field in GUI.
-        """
-        self.age_label = QLabel(self)
-        self.age_label.setText('Age:')
-        self.age_label.move(420, 110)
-
-        self.age = QLineEdit(self)
-        self.age.move(480, 110)
-
-    def get_fname(self):
-        """
-        This method reads Father's name from text field in GUI.
-        """
-        self.fname_label = QLabel(self)
-        self.fname_label.setText('Father\'s\n Name:')
-        self.fname_label.move(420, 150)
-
-        self.father_name = QLineEdit(self)
-        self.father_name.move(480, 150)
-
-    def get_mob(self):
+    def get_mobile_num(self):
         """
         This method reads mob number from text field in GUI.
         """
-        self.mob_label = QLabel(self)
-        self.mob_label.setText('Mobile:')
-        self.mob_label.move(420, 190)
+        self.mobile_label = QLabel(self)
+        self.mobile_label.setText('Mobile:')
+        self.mobile_label.move(170, 90)
 
-        self.mob = QLineEdit(self)
-        self.mob.move(480, 190)
+        self.mobile = QLineEdit(self)
+        self.mobile.move(150, 120)
+
+    def get_location(self):
+        """
+        This method reads the input name from text field in GUI.
+        """
+        self.location_label = QLabel(self)
+        self.location_label.setText('Location:')
+        self.location_label.move(150, 160)
+
+        self.location = QLineEdit(self)
+        self.location.move(150, 190)
 
     def get_facial_points(self, image_url) -> list:
         """
@@ -161,8 +148,8 @@ class NewCase(QMainWindow):
                 pixmap = QPixmap(self.fileName)
                 pixmap = pixmap.scaled(320, 350)
                 label.setPixmap(pixmap)
-                label.resize(310, 350)
-                label.move(10, 10)
+                label.resize(250, 280)
+                label.move(75, 300)
                 label.show()
 
 
@@ -172,18 +159,16 @@ class NewCase(QMainWindow):
         A case will be uniquely identified by these fields. 
         """
         entries = {}
-        if self.age.text() != "" and self.mob.text() != "" and self.name != ""\
-            and self.father_name != "":
-            entries['age'] = self.age.text()
+        if self.mobile.text() != "" and self.name.text() != "" and self.location.text() != "":
             entries['name'] = self.name.text()
-            entries['father_name'] = self.father_name.text()
+            entries['location'] = self.location.text()
             entries['mobile'] = self.mob.text()
             return entries
         else:
             return None
         
     def save_to_db(self, entries):
-        URL = "http://localhost:8000/new_case"
+        URL = "http://localhost:8000/user_submittion"
         headers = {'Content-Type': 'application/json',
                    'Accept':'application/json'}
 
@@ -201,6 +186,10 @@ class NewCase(QMainWindow):
         except Exception as e:
             QMessageBox.about(self, "Error", "Couldn't connect to database")
 
+    def generate_uuid() -> str:
+        """Generates random uui4"""
+        return str(uuid.uuid4())
+
     def save(self):
         """
         Save method is triggered with save button on GUI.
@@ -216,7 +205,6 @@ class NewCase(QMainWindow):
         entries = self.get_entries()
         if entries:
             entries['face_encoding'] = self.key_points
-            entries['submitted_by'] = 'admin'
             entries['case_id'] = generate_uuid()
             self.save_to_db(entries)
         else:
@@ -261,5 +249,5 @@ style = """
         }
     """
 app.setStyleSheet(style)
-w = NewCase()
+w = MobileApp()
 sys.exit(app.exec())

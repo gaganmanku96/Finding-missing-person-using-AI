@@ -1,3 +1,5 @@
+import sys
+
 from PyQt5 import QtGui
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QPixmap, QIcon
@@ -5,13 +7,17 @@ from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QListView
 from PyQt5.QtWidgets import QMessageBox, QListWidget, QLabel, QLineEdit
 
+from new_case import NewCase
+from train_model import train
+
 
 class AppWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, user="admin"):
         super().__init__()
         self.title = "Application"
         self.width = 800
         self.height = 600
+        self.user = user
 
         self.initialize()
 
@@ -38,13 +44,22 @@ class AppWindow(QMainWindow):
         self.show()
         
     def new_case(self):
-        pass
+        self.new_case = NewCase()
 
     def refresh_model(self):
-        pass
+        output = train(self.user)
+        if output['status']:
+            QMessageBox.about(self, "Success", output['message'])
+        else:
+            QMessageBox.about(self, "Error", output['message'])
 
     def match_from_submitted(self):
         pass
 
     def view_confirmed_cases(self):
         pass
+
+
+App = QApplication(sys.argv)
+w = AppWindow()
+sys.exit(App.exec())
