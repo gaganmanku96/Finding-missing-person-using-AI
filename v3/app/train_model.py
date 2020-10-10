@@ -65,4 +65,3 @@ def train(submitted_by: str):
 
 if __name__ == "__main__":
     result = train('admin')
-

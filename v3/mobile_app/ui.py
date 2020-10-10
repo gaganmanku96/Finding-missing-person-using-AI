@@ -162,13 +162,13 @@ class MobileApp(QMainWindow):
         if self.mobile.text() != "" and self.name.text() != "" and self.location.text() != "":
             entries['name'] = self.name.text()
             entries['location'] = self.location.text()
-            entries['mobile'] = self.mob.text()
+            entries['mobile'] = self.mobile.text()
             return entries
         else:
             return None
         
     def save_to_db(self, entries):
-        URL = "http://localhost:8000/user_submittion"
+        URL = "http://localhost:8000/user_submission"
         headers = {'Content-Type': 'application/json',
                    'Accept':'application/json'}
 
@@ -183,10 +183,12 @@ class MobileApp(QMainWindow):
                 QMessageBox.about(self, "Success", "Saved successfully")
             else:
                 QMessageBox.about(self, "Error", "Something went wrong while saving")
+                print(res.text)
         except Exception as e:
+            print(str(e))
             QMessageBox.about(self, "Error", "Couldn't connect to database")
 
-    def generate_uuid() -> str:
+    def generate_uuid(self) -> str:
         """Generates random uui4"""
         return str(uuid.uuid4())
 
@@ -205,7 +207,7 @@ class MobileApp(QMainWindow):
         entries = self.get_entries()
         if entries:
             entries['face_encoding'] = self.key_points
-            entries['case_id'] = generate_uuid()
+            entries['sub_id'] = self.generate_uuid()
             self.save_to_db(entries)
         else:
             QMessageBox.about(self, "Error", "Please fill all entries")

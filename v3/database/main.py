@@ -3,7 +3,9 @@ from typing import Optional
 from fastapi import FastAPI, UploadFile, File
 from pydantic import BaseModel
 
-from db_api import authenticate_user, submit_case, get_train_data, submit_user_data
+from db_api import (authenticate_user, submit_case, get_train_data,
+                    submit_user_data, get_user_submission, get_case_details,
+                    get_user_details)
 
 
 class NewCaseDetail(BaseModel):
@@ -48,6 +50,23 @@ def get_data(submitted_by: str):
 
 
 @app.post('/user_submission')
-def user_submission(submission_info: SubmissionInfo):
-    submit_user_data(submission_info)
+def user_submission(user_submission: UserSubmission):
+    submit_user_data(user_submission)
     return {"status": "success"}
+
+@app.get('/user_submission')
+def get_usr_submission():
+    result = get_user_submission()
+    return result
+
+
+@app.get("/get_case_details")
+def case_details(case_id: str):
+    result = get_case_details(case_id)
+    return result
+
+
+@app.get("/get_user_details")
+def user_details(case_id: str):
+    result = get_user_details(case_id)
+    return result
