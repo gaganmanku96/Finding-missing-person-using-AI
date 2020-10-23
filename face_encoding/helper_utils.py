@@ -1,11 +1,8 @@
-import io
-import base64
 import logging
 
 import dlib
 import cv2
 import numpy as np
-from PIL import Image
 
 face_detector = dlib.get_frontal_face_detector()
 
@@ -16,7 +13,7 @@ face_recognition_model = 'models/dlib_face_recognition_resnet_model_v1.dat'
 face_encoder = dlib.face_recognition_model_v1(face_recognition_model)
 
 
-def load_image_file(base64_image, mode='RGB'):
+def load_image_file(image, mode='RGB'):
     """
     Loads an image file (.jpg, .png, etc) into a numpy array
 
@@ -24,10 +21,8 @@ def load_image_file(base64_image, mode='RGB'):
     :param mode: format to convert the image to. Only 'RGB' (8-bit RGB, 3 channels) and 'L' (black and white) are supported.
     :return: image contents as numpy array
     """
-    buff = io.BytesIO(base64.b64decode(base64_image))
-    img = np.array(Image.open(buff))
-
     # If very large size image, Resize the image
+    img = image
     if img.shape[0] > 800:
         baseheight = 500
         w = (baseheight / img.shape[0])
@@ -85,25 +80,11 @@ def face_encodings(face_image, known_face_locations=None, num_jitters=1):
 
     return [np.array(face_encoder.compute_face_descriptor(face_image, raw_landmark_set, num_jitters)) for raw_landmark_set in raw_landmarks]
 
-
-def encode(key_points):
-    encoded_string = ""
-    for value in key_points:
-        svalue = str(value)
-        if value < 0:
-            svalue = svalue.replace('-', '1')  # Replace '-' with 1
-        svalue = svalue.replace('.', '$')  # Replace . with $
-        encoded_string = encoded_string + '@' + svalue
-    return encoded_string
-
-
-def get_encoding(image, encode_to_string=False):
+def get_encoding(image):
     try:
         img = load_image_file(image)
-        key_points = face_encodings(img)
-        if encode_to_string is True:
-            key_points = encode(key_points)
+        key_points = list(face_encodings(img)[0])
         return key_points
     except Exception as e:
-        logging.error('Image could not be loaded')
+        print(e)
         return None

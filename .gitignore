@@ -1,11 +1,4 @@
 .idea/
 __pycache__/
 test-images/
-training-images/
-*.csv
-*.pkl
-*.json
 .vscode/
-Trees-1024x682.jpg
-missing_person.jpg
-user_image.JPG

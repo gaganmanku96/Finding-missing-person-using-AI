@@ -1,0 +1,23 @@
+version: "3"
+services: 
+    database_api:
+        build: ./database/
+        container_name: database_api
+        ports:
+            - "8000:8000"
+        env_file: 
+            - ./config/.env.file
+        depends_on: 
+            - database_pg
+    face_encoding:
+        build: ./face_encoding/
+        container_name: face_encoding
+        ports:
+            - "8002:8002"
+    database_pg:
+        image: postgres:latest
+        ports: 
+            - "5432:5432"
+        container_name: database_pg
+        environment: 
+            - POSTGRES_PASSWORD=docker
