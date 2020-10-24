@@ -31,4 +31,100 @@ The common people will use an application on their mobile to submit photos of pe
 The next step is to match the case images and user submitted images. To match <b>KNN Algorithm </b> is used.
 ![Main Application](resources/app_window.PNG)
 
-## Installation
+## How to run
+#### 1. Easy Way
+Prerequisites
+```
+Docker (docker-compose as well)
+```
+```
+$ git clone https://github.com/gaganmanku96/Finding-missing-person-using-AI
+$ cd Finding-missing-person-using-AI
+$ docker-compose up --build
+$ cd app
+$ pip install -r requirements.txt --no-cache-dir
+$ python login_window.py
+```
+At this point you'll see a window like this
+![Login Window](resources/login_screen.PNG)
+
+> Default username: admin
+> Default password: admin
+> 
+> Login window makes sure that only authenticated can view the registered cases. Each user can only view the cases submitted by him.
+> NOTE: There is no concpet of superuser.
+
+After logging in you'll see the main screen through which you'll be able to submit cases.
+
+##### To run the mobile application:
+```
+$ cd mobile_app
+```
+or (if you are inside app dir) 
+```
+$ ../mobile_app
+```
+```
+$ python ui.py
+```
+After that you'll see a window like this<br>
+![mobile application](resources/mobile_application.PNG)
+
+You can this to submit user images or you can create your own mobile app.
+
+Once done you'll have to <b>Click on Refresh</b> button on train KNN Model and then on <b>Match</b> to start Matching Images.
+
+#### 2. Without Docker (Intermediate)
+Here are the step you have to do
+1. Install Postgres Database and replace the username and password in config/.env.file
+2. The next step is to run database and make sure it is working.
+```
+$ cd database
+$ pip install -r requirements.txt
+$ uvicorn main:app --port 8002
+```
+3. Next, the face encoding api
+```
+$ cd face_encoding
+$ pip install -r requirements.txt
+$ uvicorn main:app --port 8000
+```
+> If you are using non-conda environment like venv then it might give error while installing dlib library.
+4. Running  the application
+```
+$ cd app
+$ pip install -r requirements.txt
+$ python login.py
+```
+At this point you'll see a window like this
+![Login Window](resources/login_screen.PNG)
+
+> Default username: admin
+> Default password: admin
+> 
+> Login window makes sure that only authenticated can view the registered cases. Each user can only view the cases submitted by him.
+> NOTE: There is no concpet of superuser.
+
+After logging in you'll see the main screen through which you'll be able to submit cases.
+
+##### To run the mobile application:
+```
+$ cd mobile_app
+```
+or (if you are inside app dir) 
+```
+$ ../mobile_app
+```
+```
+$ python ui.py
+```
+After that you'll see a window like this<br>
+![mobile application](resources/mobile_application.PNG)
+
+You can this to submit user images or you can create your own mobile app.
+
+Once done you'll have to <b>Click on Refresh</b> button on train KNN Model and then on <b>Match</b> to start Matching Images.
+
+#### Vote of Thanks
+- Thanks to [Davis King](https://github.com/davisking) for creating dlib and for providing the trained facial feature
+  detection and face encoding models used in this project.
