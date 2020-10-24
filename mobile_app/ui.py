@@ -5,6 +5,7 @@ import json
 import uuid
 
 from PIL import Image
+from PyQt5 import QtGui
 from PyQt5.QtGui import QPixmap, QImage, QImageReader
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QPushButton, QApplication
 from PyQt5.QtWidgets import QInputDialog, QLabel, QLineEdit, QMessageBox
@@ -36,6 +37,7 @@ class MobileApp(QMainWindow):
         """
         super().__init__()
         self.title = "Submit Image"
+        self.icon_path = '../resources/icon.png'
         self.location = None
         self.name = None
         self.mobile = None
@@ -55,6 +57,7 @@ class MobileApp(QMainWindow):
         -> If you are chaning the window size make sure to align the buttons
             correctly.
         """
+        self.setWindowIcon(QtGui.QIcon(self.icon_path))
         self.setFixedSize(400, 700)
         self.setWindowTitle(self.title)
 
