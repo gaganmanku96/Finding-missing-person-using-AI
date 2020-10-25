@@ -4,6 +4,12 @@
 
 Hundreds of people (especially children go missing every day) in India. There are various <b>NGO's and Govt Initiatives</b> to help with it. This project tries to implement an  existing/new way to help.
 
+## [News Articles](#news-articles)
+## [Objective](#what-is-the-objective-of-this-project-and-how-will-it-help)
+## [Solution](#solution-projects-implementation)
+## [Installation](#how-to-run)
+## [What is left/not working?](#what-is-left)
+
 ## News Articles
 #### [Article 1](https://www.thehindu.com/society/indias-missing-children-what-the-whatsapp-rumours-dont-tell-you/article24641527.ece)
 ![News Article 1](resources/news_1.PNG)
@@ -34,7 +40,7 @@ The next step is to match the case images and user submitted images. To match <b
 ![Main Application](resources/app_window.PNG)
 
 ## How to run
-#### 1. Easy Way
+#### 1. With Docker (Easy)
 Prerequisites
 ```
 Docker (docker-compose as well)
@@ -127,6 +133,15 @@ You can this to submit user images or you can create your own mobile app.
 
 Once done you'll have to <b>Click on Refresh</b> button on train KNN Model and then on <b>Match</b> to start Matching Images.
 
-#### Vote of Thanks
+
+## What is left?
+ - [x] Login (Authentication)
+ - [x] Submit new case
+ - [x] Mobile Application (to submit user photos)
+ - [ ] View submitted cases
+ - [ ] View confirmed cases
+ - [ ] Unit tests
+
+## Vote of Thanks
 - Thanks to [Davis King](https://github.com/davisking) for creating dlib and for providing the trained facial feature
   detection and face encoding models used in this project.
