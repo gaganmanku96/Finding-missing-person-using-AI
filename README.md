@@ -4,11 +4,12 @@
 
 Hundreds of people (especially children go missing every day) in India. There are various <b>NGO's and Govt Initiatives</b> to help with it. This project tries to implement an  existing/new way to help.
 
-## [News Articles](#news-articles)
-## [Objective](#what-is-the-objective-of-this-project-and-how-will-it-help)
-## [Solution](#solution-projects-implementation)
-## [Installation](#how-to-run)
-## [What is left/not working?](#what-is-left)
+## List of contents
+- ### [News Articles](#news-articles)
+- ### [Objective](#what-is-the-objective-of-this-project-and-how-will-it-help)
+- ### [Solution](#solution-projects-implementation)
+- ### [Installation](#how-to-run)
+- ### [What is left/not working?](#what-is-left)
 
 ## News Articles
 #### [Article 1](https://www.thehindu.com/society/indias-missing-children-what-the-whatsapp-rumours-dont-tell-you/article24641527.ece)
