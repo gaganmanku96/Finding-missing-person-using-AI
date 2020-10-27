@@ -1,7 +1,5 @@
 psycopg2-binary
-opencv-python
 pyqt5
 pandas
 numpy
 sklearn
-dlib
