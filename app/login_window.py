@@ -59,14 +59,17 @@ class LoginWindow(QMainWindow):
         if not self.password.text() or not self.username.text():
             QMessageBox.about(self, "Error", "\nPlease fill all entries\t\n")
         else:
-            login_stats = requests.get(self.URL+'/login?username='+
-                                       self.username.text()+
-                                       '&password='+self.password.text())
-            login_stats = json.loads(login_stats.text)
-            if login_stats['status'] == True:
-                self.app_window = AppWindow(user=self.username.text())
-            else:
-                QMessageBox.about(self, "Login Failed", "\nPlease try again\t\n")
+            try:
+                login_stats = requests.get(self.URL+'/login?username='+
+                                        self.username.text()+
+                                        '&password='+self.password.text())
+                login_stats = json.loads(login_stats.text)
+                if login_stats['status'] == True:
+                    self.app_window = AppWindow(user=self.username.text())
+                else:
+                    QMessageBox.about(self, "Login Failed", "\nPlease try again\t\n")
+            except requests.exceptions.ConnectionError:
+                QMessageBox.about(self, "Conenction Error", "\nDatabase is not running\t\n")
 
         
 
