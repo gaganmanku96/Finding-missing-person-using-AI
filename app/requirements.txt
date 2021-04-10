@@ -3,3 +3,4 @@ pyqt5
 pandas
 numpy
 sklearn
+pillow
