@@ -6,10 +6,10 @@ import psycopg2
 
 @dataclass
 class PostgresConfig():
-    PG_DATABASE = os.environ['PG_DATABASE']
-    PG_USER = os.environ['PG_USER']
-    PG_PASSWORD = os.environ['PG_PASSWORD']
-    PG_HOST = os.environ['PG_HOST']
+    PG_DATABASE = os.environ.get('PG_DATABASE', 'postgres')
+    PG_USER = os.environ.get('PG_USER', 'postgres')
+    PG_PASSWORD = os.environ.get('PG_PASSWORD', 'docker')
+    PG_HOST = os.environ.get('PG_HOST', 'database_pg')
 
 
 class PostgresConnection(PostgresConfig):
