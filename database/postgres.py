@@ -9,7 +9,7 @@ class PostgresConfig():
     PG_DATABASE = os.environ.get('PG_DATABASE', 'postgres')
     PG_USER = os.environ.get('PG_USER', 'postgres')
     PG_PASSWORD = os.environ.get('PG_PASSWORD', 'docker')
-    PG_HOST = os.environ.get('PG_HOST', 'database_pg')
+    PG_HOST = os.environ.get('PG_HOST', 'localhost')
 
 
 class PostgresConnection(PostgresConfig):
