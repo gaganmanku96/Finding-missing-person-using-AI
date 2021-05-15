@@ -71,7 +71,7 @@ def get_case_details(case_id):
 
 
 def get_user_details(case_id):
-    query = f"select location, date, image from user_submissions where id={case_id}"
+    query = f"select location, submitted_at, image from user_submissions where id={case_id}"
     with PostgresConnection() as conn:
         cursor = conn.cursor()
         cursor.execute(query)
