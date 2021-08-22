@@ -47,6 +47,7 @@ class NewCase(QMainWindow):
         self.encoded_image = None
         self.key_points = None
         self.user = user
+        self._x_axis = 500
         self.initialize()
 
     def initialize(self):
@@ -64,13 +65,15 @@ class NewCase(QMainWindow):
         self.setFixedSize(800, 600)
         self.setWindowTitle(self.title)
 
-        upload_image_bt = QPushButton("Image", self)
-        upload_image_bt.move(400, 20)
-        upload_image_bt.clicked.connect(self.openFileNameDialog)
+        upload_image_button = QPushButton("Upload Image", self)
+        upload_image_button.resize(150, 50)
+        upload_image_button.move(self._x_axis, 20)
+        upload_image_button.clicked.connect(self.openFileNameDialog)
 
-        save_bt = QPushButton("Save ", self)
-        save_bt.move(400, 350)
-        save_bt.clicked.connect(self.save)
+        save_button = QPushButton("Save", self)
+        save_button.resize(150, 50)
+        save_button.move(self._x_axis, 350)
+        save_button.clicked.connect(self.save)
 
         self.get_name()
         self.get_age()
@@ -84,10 +87,9 @@ class NewCase(QMainWindow):
         """
         self.name_label = QLabel(self)
         self.name_label.setText('Name:')
-        self.name_label.move(420, 70)
-
+        self.name_label.move(self._x_axis, 100)
         self.name = QLineEdit(self)
-        self.name.move(480, 70)
+        self.name.move(self._x_axis + 50, 100)
 
     def get_age(self):
         """
@@ -95,10 +97,10 @@ class NewCase(QMainWindow):
         """
         self.age_label = QLabel(self)
         self.age_label.setText('Age:')
-        self.age_label.move(420, 110)
+        self.age_label.move(self._x_axis, 150)
 
         self.age = QLineEdit(self)
-        self.age.move(480, 110)
+        self.age.move(self._x_axis + 50, 150)
 
     def get_fname(self):
         """
@@ -106,10 +108,10 @@ class NewCase(QMainWindow):
         """
         self.fname_label = QLabel(self)
         self.fname_label.setText('Father\'s\n Name:')
-        self.fname_label.move(420, 150)
+        self.fname_label.move(self._x_axis, 200)
 
         self.father_name = QLineEdit(self)
-        self.father_name.move(480, 150)
+        self.father_name.move(self._x_axis + 50, 200)
 
     def get_mob(self):
         """
@@ -117,10 +119,10 @@ class NewCase(QMainWindow):
         """
         self.mob_label = QLabel(self)
         self.mob_label.setText('Mobile:')
-        self.mob_label.move(420, 190)
+        self.mob_label.move(self._x_axis, 250)
 
         self.mob = QLineEdit(self)
-        self.mob.move(480, 190)
+        self.mob.move(self._x_axis + 50, 250)
 
     def get_facial_points(self, image_url) -> list:
         """
@@ -167,7 +169,7 @@ class NewCase(QMainWindow):
                 pixmap = pixmap.scaled(320, 350)
                 label.setPixmap(pixmap)
                 label.resize(310, 350)
-                label.move(10, 10)
+                label.move(50, 50)
                 label.show()
 
 
@@ -226,3 +228,10 @@ class NewCase(QMainWindow):
             self.save_to_db(entries)
         else:
             QMessageBox.about(self, "Error", "Please fill all entries")
+
+
+if __name__ == '__main__':
+
+    app = QApplication(sys.argv)
+    w = NewCase('gagan')
+    sys.exit(app.exec())

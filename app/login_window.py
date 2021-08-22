@@ -60,11 +60,11 @@ class LoginWindow(QMainWindow):
             QMessageBox.about(self, "Error", "\nPlease fill all entries\t\n")
         else:
             try:
-                login_stats = requests.get(self.URL+'/login?username='+
+                login_status = requests.get(self.URL+'/login?username='+
                                         self.username.text()+
                                         '&password='+self.password.text())
-                login_stats = json.loads(login_stats.text)
-                if login_stats['status'] == True:
+                login_status = json.loads(login_status.text)
+                if login_status['status'] == True:
                     self.app_window = AppWindow(user=self.username.text())
                 else:
                     QMessageBox.about(self, "Login Failed", "\nPlease try again\t\n")

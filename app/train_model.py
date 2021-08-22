@@ -15,7 +15,7 @@ def get_train_data(submitted_by: str):
     Args:
         submitted_by: str
     """
-    URL = "http://localhost:8000/get_train_data?submitted_by="+submitted_by
+    URL = "http://localhost:8000/get_training_data?submitted_by="+submitted_by+"&status=NF"
     try:
         result = requests.get(URL)
         if result.status_code == 200:
