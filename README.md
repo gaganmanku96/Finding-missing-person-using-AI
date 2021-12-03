@@ -90,13 +90,13 @@ Here are the step you have to do
 ```
 $ cd database
 $ pip install -r requirements.txt
-$ uvicorn main:app --port 8002
+$ uvicorn main:app --port 8000
 ```
 3. Next, the face encoding api
 ```
 $ cd face_encoding
 $ pip install -r requirements.txt
-$ uvicorn main:app --port 8000
+$ uvicorn main:app --port 8002
 ```
 > If you are using non-conda environment like venv then it might give error while installing dlib library.
 4. Running  the application
