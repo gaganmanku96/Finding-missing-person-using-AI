@@ -1,4 +1,4 @@
-# Find Missing Person using AI(https://img.shields.io/github/repo-size/gaganmanku96/Finding-missing-person-using-AI)
+# Find Missing Person using AI
 ![Issues](https://img.shields.io/github/issues/gaganmanku96/Finding-missing-person-using-AI) ![Stars](https://img.shields.io/github/stars/gaganmanku96/Finding-missing-person-using-AI?style=social)
 
 # [Youtube Link](https://www.youtube.com/channel/UC7ln87o0Gt8OkkHIqEmeDQw/videos)
