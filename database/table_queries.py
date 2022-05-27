@@ -37,4 +37,6 @@ users_tables = """
         role varchar(10) not null
     )"""
 
-admin_user_query = "insert into users(username, password, role) values('admin', 'admin', 'RW')"
+admin_user_query = (
+    "insert into users(username, password, role) values('admin', 'admin', 'RW')"
+)

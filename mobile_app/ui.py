@@ -26,6 +26,7 @@ class MobileApp(QMainWindow):
     If you encounter any error while saving the image, check the logs
     which are being printed.
     """
+
     def __init__(self):
         """
         We are initializing few things we would need.
@@ -37,7 +38,7 @@ class MobileApp(QMainWindow):
         """
         super().__init__()
         self.title = "Submit Image"
-        self.icon_path = '../resources/icon.png'
+        self.icon_path = "../resources/icon.png"
         self.location = None
         self.name = None
         self.mobile = None
@@ -79,7 +80,7 @@ class MobileApp(QMainWindow):
         This method reads the input name from text field in GUI.
         """
         self.name_label = QLabel(self)
-        self.name_label.setText('Your Name:')
+        self.name_label.setText("Your Name:")
         self.name_label.move(170, 20)
 
         self.name = QLineEdit(self)
@@ -90,7 +91,7 @@ class MobileApp(QMainWindow):
         This method reads mob number from text field in GUI.
         """
         self.mobile_label = QLabel(self)
-        self.mobile_label.setText('Mobile:')
+        self.mobile_label.setText("Mobile:")
         self.mobile_label.move(170, 90)
 
         self.mobile = QLineEdit(self)
@@ -101,7 +102,7 @@ class MobileApp(QMainWindow):
         This method reads the input name from text field in GUI.
         """
         self.location_label = QLabel(self)
-        self.location_label.setText('Location:')
+        self.location_label.setText("Location:")
         self.location_label.move(150, 160)
 
         self.location = QLineEdit(self)
@@ -116,11 +117,11 @@ class MobileApp(QMainWindow):
          list
         """
         URL = "http://localhost:8002/image"
-        f = [('image', open(image_url, 'rb'))]
+        f = [("image", open(image_url, "rb"))]
         try:
             result = requests.post(URL, files=f)
             if result.status_code == 200:
-                return json.loads(result.text)['encoding']
+                return json.loads(result.text)["encoding"]
             else:
                 QMessageBox.about(self, "Error", "Couldn't find face in Image")
                 return None
@@ -141,8 +142,12 @@ class MobileApp(QMainWindow):
         """
         options = QFileDialog.Options()
         self.fileName, _ = QFileDialog.getOpenFileName(
-                    self, "QFileDialog.getOpenFileName()",
-                    "", "jpg file (*.jpg)", options=options)
+            self,
+            "QFileDialog.getOpenFileName()",
+            "",
+            "jpg file (*.jpg)",
+            options=options,
+        )
 
         if self.fileName:
             self.key_points = self.get_facial_points(self.fileName)
@@ -155,32 +160,34 @@ class MobileApp(QMainWindow):
                 label.move(75, 300)
                 label.show()
 
-
     def get_entries(self):
         """
         A check to make sure empty fields are not saved.
-        A case will be uniquely identified by these fields. 
+        A case will be uniquely identified by these fields.
         """
         entries = {}
-        if self.mobile.text() != "" and self.name.text() != "" and self.location.text() != "":
-            entries['name'] = self.name.text()
-            entries['location'] = self.location.text()
-            entries['mobile'] = self.mobile.text()
+        if (
+            self.mobile.text() != ""
+            and self.name.text() != ""
+            and self.location.text() != ""
+        ):
+            entries["name"] = self.name.text()
+            entries["location"] = self.location.text()
+            entries["mobile"] = self.mobile.text()
             return entries
         else:
             return None
-        
+
     def save_to_db(self, entries):
         URL = "http://localhost:8000/user_submission"
-        headers = {'Content-Type': 'application/json',
-                   'Accept':'application/json'}
+        headers = {"Content-Type": "application/json", "Accept": "application/json"}
 
-        byte_content = open(self.fileName, 'rb').read()
+        byte_content = open(self.fileName, "rb").read()
         base64_bytes = base64.b64encode(byte_content)
         base64_string = base64_bytes.decode("utf-8")
 
-        entries['image'] = base64_string
-        try:            
+        entries["image"] = base64_string
+        try:
             res = requests.post(URL, json.dumps(entries), headers=headers)
             if res.status_code == 200:
                 QMessageBox.about(self, "Success", "Saved successfully")
@@ -198,7 +205,7 @@ class MobileApp(QMainWindow):
     def save(self):
         """
         Save method is triggered with save button on GUI.
-       
+
         All the parameters are passed to a db methods whose task is to save
         them in db.
 
@@ -209,8 +216,8 @@ class MobileApp(QMainWindow):
         """
         entries = self.get_entries()
         if entries:
-            entries['face_encoding'] = self.key_points
-            entries['sub_id'] = self.generate_uuid()
+            entries["face_encoding"] = self.key_points
+            entries["sub_id"] = self.generate_uuid()
             self.save_to_db(entries)
         else:
             QMessageBox.about(self, "Error", "Please fill all entries")

@@ -34,10 +34,12 @@ class UserSubmission(BaseModel):
 app = FastAPI()
 
 
-@app.get('/login')
-def authenticate(username: str, password: str, role: Optional[str]=None):
+@app.get("/login")
+def authenticate(username: str, password: str, role: Optional[str] = None):
     result = False
-    query = "select * from users where username='{}' and password='{}'".format(username, password)
+    query = "select * from users where username='{}' and password='{}'".format(
+        username, password
+    )
     with PostgresConnection() as conn:
         cursor = conn.cursor()
         cursor.execute(query)
@@ -46,7 +48,7 @@ def authenticate(username: str, password: str, role: Optional[str]=None):
     return {"status": result}
 
 
-@app.post('/new_case')
+@app.post("/new_case")
 def new_case(user_info: NewCaseDetail):
     submitted_by = user_info.submitted_by
     name = user_info.name
@@ -65,9 +67,11 @@ def new_case(user_info: NewCaseDetail):
     return {"status": "success"}
 
 
-@app.get('/get_training_data')
+@app.get("/get_training_data")
 def get_training_data(submitted_by: str, status: str = None):
-    query = "select case_id, face_encoding from submitted_cases where submitted_by='{}'".format(submitted_by)
+    query = "select case_id, face_encoding from submitted_cases where submitted_by='{}'".format(
+        submitted_by
+    )
     if status:
         query = query + "and status='NF'"
     with PostgresConnection() as conn:
@@ -76,7 +80,7 @@ def get_training_data(submitted_by: str, status: str = None):
         return cursor.fetchall()
 
 
-@app.get('/get_submitted_cases')
+@app.get("/get_submitted_cases")
 def submitted_cases(submitted_by: str):
     query = "select * from submitted_cases where submitted_by='{}'".format(submitted_by)
     with PostgresConnection() as conn:
@@ -85,7 +89,7 @@ def submitted_cases(submitted_by: str):
         return cursor.fetchall()
 
 
-@app.post('/user_submission')
+@app.post("/user_submission")
 def user_submission(user_submission: UserSubmission):
     name = user_submission.name
     location = user_submission.location
@@ -93,7 +97,7 @@ def user_submission(user_submission: UserSubmission):
     image = user_submission.image
     face_encoding = user_submission.face_encoding
     sub_id = user_submission.sub_id
-    status = 'NC'
+    status = "NC"
     query = f"insert into user_submissions(id, submitted_by, face_encoding,\
               location, mobile, image, status) values('{sub_id}', '{name}', '{face_encoding}',\
               '{location}', '{mobile}', '{image}', 'NR')"
@@ -103,7 +107,7 @@ def user_submission(user_submission: UserSubmission):
     return {"status": "success"}
 
 
-@app.get('/user_submission')
+@app.get("/user_submission")
 def get_usr_submission():
     query = f"select id, face_encoding from user_submissions"
     with PostgresConnection() as conn:
@@ -123,7 +127,9 @@ def case_details(case_id: str):
 
 @app.get("/get_user_details")
 def user_details(case_id: str):
-    query = f"select location, submitted_at, image from user_submissions where id={case_id}"
+    query = (
+        f"select location, submitted_at, image from user_submissions where id={case_id}"
+    )
     with PostgresConnection() as conn:
         cursor = conn.cursor()
         cursor.execute(query)
@@ -139,7 +145,7 @@ def get_confirmed_cases(submitted_by: str):
         return cursor.fetchall()
 
 
-@app.get('/change_found_status')
+@app.get("/change_found_status")
 def change_found_status(case_id: str):
     query = f"update submitted_cases set status='F' where case_id={case_id}"
     with PostgresConnection() as conn:
@@ -148,6 +154,6 @@ def change_found_status(case_id: str):
     return {"status": "success"}
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     create()
     uvicorn.run("main:app", host="127.0.0.1", port=8000, log_level="info")

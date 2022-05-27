@@ -24,6 +24,7 @@ class NewCase(QMainWindow):
     If you encounter any error while saving the image, check the logs
     which are being printed.
     """
+
     def __init__(self, user: str):
         """
         We are initializing few things we would need.
@@ -32,7 +33,7 @@ class NewCase(QMainWindow):
             mob -> Mobile number that will be contacted after the person is found.
             father_name -> Father's name of the person
             image -> image of the person
-        
+
         Args:
             user: str
                 The logged in user
@@ -86,7 +87,7 @@ class NewCase(QMainWindow):
         This method reads the input name from text field in GUI.
         """
         self.name_label = QLabel(self)
-        self.name_label.setText('Name:')
+        self.name_label.setText("Name:")
         self.name_label.move(self._x_axis, 100)
         self.name = QLineEdit(self)
         self.name.move(self._x_axis + 50, 100)
@@ -96,7 +97,7 @@ class NewCase(QMainWindow):
         This method reads the age from text field in GUI.
         """
         self.age_label = QLabel(self)
-        self.age_label.setText('Age:')
+        self.age_label.setText("Age:")
         self.age_label.move(self._x_axis, 150)
 
         self.age = QLineEdit(self)
@@ -107,7 +108,7 @@ class NewCase(QMainWindow):
         This method reads Father's name from text field in GUI.
         """
         self.fname_label = QLabel(self)
-        self.fname_label.setText('Father\'s\n Name:')
+        self.fname_label.setText("Father's\n Name:")
         self.fname_label.move(self._x_axis, 200)
 
         self.father_name = QLineEdit(self)
@@ -118,7 +119,7 @@ class NewCase(QMainWindow):
         This method reads mob number from text field in GUI.
         """
         self.mob_label = QLabel(self)
-        self.mob_label.setText('Mobile:')
+        self.mob_label.setText("Mobile:")
         self.mob_label.move(self._x_axis, 250)
 
         self.mob = QLineEdit(self)
@@ -133,11 +134,11 @@ class NewCase(QMainWindow):
          list
         """
         URL = "http://localhost:8002/image"
-        f = [('image', open(image_url, 'rb'))]
+        f = [("image", open(image_url, "rb"))]
         try:
             result = requests.post(URL, files=f)
             if result.status_code == 200:
-                return json.loads(result.text)['encoding']
+                return json.loads(result.text)["encoding"]
             else:
                 QMessageBox.about(self, "Error", "Couldn't find face in Image")
                 return None
@@ -158,8 +159,12 @@ class NewCase(QMainWindow):
         """
         options = QFileDialog.Options()
         self.fileName, _ = QFileDialog.getOpenFileName(
-                    self, "QFileDialog.getOpenFileName()",
-                    "", "jpg file (*.jpg)", options=options)
+            self,
+            "QFileDialog.getOpenFileName()",
+            "",
+            "jpg file (*.jpg)",
+            options=options,
+        )
 
         if self.fileName:
             self.key_points = self.get_facial_points(self.fileName)
@@ -172,34 +177,36 @@ class NewCase(QMainWindow):
                 label.move(50, 50)
                 label.show()
 
-
     def get_entries(self):
         """
         A check to make sure empty fields are not saved.
-        A case will be uniquely identified by these fields. 
+        A case will be uniquely identified by these fields.
         """
         entries = {}
-        if self.age.text() != "" and self.mob.text() != "" and self.name != ""\
-            and self.father_name != "":
-            entries['age'] = self.age.text()
-            entries['name'] = self.name.text()
-            entries['father_name'] = self.father_name.text()
-            entries['mobile'] = self.mob.text()
+        if (
+            self.age.text() != ""
+            and self.mob.text() != ""
+            and self.name != ""
+            and self.father_name != ""
+        ):
+            entries["age"] = self.age.text()
+            entries["name"] = self.name.text()
+            entries["father_name"] = self.father_name.text()
+            entries["mobile"] = self.mob.text()
             return entries
         else:
             return None
-        
+
     def save_to_db(self, entries):
         URL = "http://localhost:8000/new_case"
-        headers = {'Content-Type': 'application/json',
-                   'Accept':'application/json'}
+        headers = {"Content-Type": "application/json", "Accept": "application/json"}
 
-        byte_content = open(self.fileName, 'rb').read()
+        byte_content = open(self.fileName, "rb").read()
         base64_bytes = base64.b64encode(byte_content)
         base64_string = base64_bytes.decode("utf-8")
 
-        entries['image'] = base64_string
-        try:            
+        entries["image"] = base64_string
+        try:
             res = requests.post(URL, json.dumps(entries), headers=headers)
             if res.status_code == 200:
                 QMessageBox.about(self, "Success", "Saved successfully")
@@ -211,7 +218,7 @@ class NewCase(QMainWindow):
     def save(self):
         """
         Save method is triggered with save button on GUI.
-       
+
         All the parameters are passed to a db methods whose task is to save
         them in db.
 
@@ -222,16 +229,16 @@ class NewCase(QMainWindow):
         """
         entries = self.get_entries()
         if entries:
-            entries['face_encoding'] = self.key_points
-            entries['submitted_by'] = self.user
-            entries['case_id'] = generate_uuid()
+            entries["face_encoding"] = self.key_points
+            entries["submitted_by"] = self.user
+            entries["case_id"] = generate_uuid()
             self.save_to_db(entries)
         else:
             QMessageBox.about(self, "Error", "Please fill all entries")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     app = QApplication(sys.argv)
-    w = NewCase('gagan')
+    w = NewCase("gagan")
     sys.exit(app.exec())

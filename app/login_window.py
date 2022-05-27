@@ -19,7 +19,7 @@ class LoginWindow(QMainWindow):
         self.width = 800
         self.height = 600
         self.URL = "http://localhost:8000"
-        self.icon_path = '../resources/icon.png'
+        self.icon_path = "../resources/icon.png"
         self.username = None
         self.password = None
 
@@ -45,7 +45,7 @@ class LoginWindow(QMainWindow):
 
         self.username = QLineEdit(self)
         self.username.move(370, 170)
-    
+
     def get_password(self):
         password_label = QLabel(self)
         password_label.setText("Password: ")
@@ -54,24 +54,28 @@ class LoginWindow(QMainWindow):
         self.password = QLineEdit(self)
         self.password.setEchoMode(QLineEdit.Password)
         self.password.move(370, 200)
-    
+
     def login(self):
         if not self.password.text() or not self.username.text():
             QMessageBox.about(self, "Error", "\nPlease fill all entries\t\n")
         else:
             try:
-                login_status = requests.get(self.URL+'/login?username='+
-                                        self.username.text()+
-                                        '&password='+self.password.text())
+                login_status = requests.get(
+                    self.URL
+                    + "/login?username="
+                    + self.username.text()
+                    + "&password="
+                    + self.password.text()
+                )
                 login_status = json.loads(login_status.text)
-                if login_status.get('status', False):
+                if login_status.get("status", False):
                     self.app_window = AppWindow(user=self.username.text())
                 else:
                     QMessageBox.about(self, "Login Failed", "\nPlease try again\t\n")
             except requests.exceptions.ConnectionError:
-                QMessageBox.about(self, "Conenction Error", "\nDatabase is not running\t\n")
-
-        
+                QMessageBox.about(
+                    self, "Conenction Error", "\nDatabase is not running\t\n"
+                )
 
 
 app = QApplication(sys.argv)
