@@ -51,13 +51,15 @@ def match():
     for row in user_submissions_df.iterrows():
         label = row[1][0]
         face_encoding = row[1][1:]
-        closest_distances = clf.kneighbors([face_encoding])
-        closest_distance = np.argmin(closest_distances[0][0])
+        closest_distances = clf.kneighbors([face_encoding])[0][0]
+        closest_distance = np.argmin(closest_distances)
+        closest_distance = closest_distances[closest_distance]
+
         if closest_distance <= 0.5:
             predicted_label = clf.predict([face_encoding])
             inversed_label = le.inverse_transform([predicted_label])[0]
             matched_images[inversed_label].append(label)
-
+    
     return {
         "status": True,
         "result": matched_images
