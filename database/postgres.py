@@ -8,7 +8,7 @@ import psycopg2
 class PostgresConfig:
     PG_DATABASE = os.environ.get("PG_DATABASE", "postgres")
     PG_USER = os.environ.get("PG_USER", "postgres")
-    PG_PASSWORD = os.environ.get("PG_PASSWORD", "docker")
+    PG_PASSWORD = os.environ.get("PG_PASSWORD", "anki123")
     PG_HOST = os.environ.get("PG_HOST", "localhost")
 
 

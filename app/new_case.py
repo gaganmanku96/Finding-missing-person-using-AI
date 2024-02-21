@@ -131,7 +131,7 @@ class NewCase(QMainWindow):
 
         Returns
         -------
-         list
+         list   
         """
         URL = "http://localhost:8002/image"
         f = [("image", open(image_url, "rb"))]
