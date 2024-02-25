@@ -11,6 +11,8 @@
 ### Setup Videos Playlist
 - Will by uploaded tomorrow
 
+Environment
+- https://drive.google.com/file/d/1JggPSS8QidwvDz6Wnxlrmob-2RjpkD9C/view?usp=drive_link
 
 Base Project
 - https://shrs.link/Kv6jUb
