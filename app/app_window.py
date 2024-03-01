@@ -30,6 +30,7 @@ class AppWindow(QMainWindow):
         self.title = "Application"
         self.width = 800
         self.height = 600
+        
         self.user = user
 
         self.initialize()
@@ -37,6 +38,7 @@ class AppWindow(QMainWindow):
     def initialize(self):
         self.setWindowTitle(self.title)
         self.setFixedSize(self.width, self.height)
+        
 
         button_upload = QPushButton("New Case", self)
         button_upload.move(570, 50)
@@ -53,7 +55,7 @@ class AppWindow(QMainWindow):
         button_match.move(570, 250)
         button_match.clicked.connect(self.match_from_submitted)
 
-        submitted_case_button = QPushButton("View submitted cases", self)
+        submitted_case_button = QPushButton("cases", self)
         submitted_case_button.resize(150, 50)
         submitted_case_button.move(570, 350)
         submitted_case_button.clicked.connect(self.view_submitted_cases)
