@@ -155,3 +155,5 @@ Once done you'll have to <b>Click on Refresh</b> button on train KNN Model and t
 ## Vote of Thanks
 - Thanks to [Davis King](https://github.com/davisking) for creating dlib and for providing the trained facial feature
   detection and face encoding models used in this project.
+
+## can i use it in my school project
