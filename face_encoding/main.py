@@ -4,7 +4,7 @@ from fastapi import FastAPI, File, UploadFile, HTTPException
 import numpy as np
 from PIL import Image
 
-from helper_utils import get_encoding
+from face_encoding.face_encoding import get_encoding
 
 app = FastAPI()
 

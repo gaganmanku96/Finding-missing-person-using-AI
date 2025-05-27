@@ -1,0 +1,1 @@
+.\fmp\fmp\python.exe -m streamlit run .\mobile_app.py
