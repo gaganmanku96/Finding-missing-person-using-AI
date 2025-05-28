@@ -28,7 +28,7 @@ with image_col:
     if image_obj:
         import uuid
 
-        unique_id = uuid.uuid4()
+        unique_id = str(uuid.uuid4())
 
         with st.spinner("Processing..."):
             uploaded_file_path = "./resources/" + str(unique_id) + ".jpg"

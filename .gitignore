@@ -1,0 +1,4 @@
+*.pyc
+__pycache__
+sqlite_database.db
+classifier.pkl

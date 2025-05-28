@@ -1,4 +1,4 @@
-from uuid import UUID, uuid4
+from uuid import uuid4
 from datetime import datetime
 
 from sqlmodel import Field, create_engine, SQLModel
@@ -6,7 +6,8 @@ from sqlmodel import Field, create_engine, SQLModel
 
 class PublicSubmissions(SQLModel, table=True):
     __table_args__ = {"extend_existing": True}
-    id: UUID = Field(primary_key=True, default_factory=uuid4, nullable=False)
+    # Changed: UUID -> str, uuid4 -> lambda: str(uuid4())
+    id: str = Field(primary_key=True, default_factory=lambda: str(uuid4()), nullable=False)
     submitted_by: str = Field(max_length=128, nullable=True)
     face_mesh: str = Field(nullable=False)  # JSON string of face mesh landmarks
     location: str = Field(max_length=128, nullable=True)
@@ -14,12 +15,14 @@ class PublicSubmissions(SQLModel, table=True):
     email: str = Field(max_length=64, nullable=True)
     status: str = Field(max_length=16, nullable=False)
     birth_marks: str = Field(max_length=512, nullable=True)
-    submitted_on: datetime = Field(default=datetime.utcnow(), nullable=False)
+    # Changed: datetime.utcnow() -> datetime.utcnow (remove parentheses)
+    submitted_on: datetime = Field(default_factory=datetime.utcnow, nullable=False)
 
 
 class RegisteredCases(SQLModel, table=True):
     __table_args__ = {"extend_existing": True}
-    id: UUID = Field(primary_key=True, default_factory=uuid4, nullable=False)
+    # Changed: UUID -> str, uuid4 -> lambda: str(uuid4())
+    id: str = Field(primary_key=True, default_factory=lambda: str(uuid4()), nullable=False)
     submitted_by: str = Field(max_length=64, nullable=False)
     name: str = Field(max_length=128, nullable=False)
     father_name: str = Field(max_length=128, nullable=True)
@@ -30,7 +33,8 @@ class RegisteredCases(SQLModel, table=True):
     last_seen: str = Field(max_length=64)
     address: str = Field(max_length=512)
     face_mesh: str = Field(nullable=False)  # JSON string of face mesh landmarks
-    submitted_on: datetime = Field(default=datetime.utcnow(), nullable=False)
+    # Changed: datetime.utcnow() -> datetime.utcnow (remove parentheses)
+    submitted_on: datetime = Field(default_factory=datetime.utcnow, nullable=False)
     status: str = Field(max_length=16, nullable=False)
     birth_marks: str = Field(max_length=512)
     matched_with: str = Field(nullable=True)

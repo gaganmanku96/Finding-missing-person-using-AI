@@ -36,7 +36,7 @@ elif st.session_state["login_status"]:
         if image_obj:
             import uuid
 
-            unique_id = uuid.uuid4()
+            unique_id = str(uuid.uuid4())
             uploaded_file_path = "./resources/" + str(unique_id) + ".jpg"
             with open(uploaded_file_path, "wb") as output_temporary_file:
                 output_temporary_file.write(image_obj.read())

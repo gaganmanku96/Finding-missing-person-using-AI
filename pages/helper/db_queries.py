@@ -119,6 +119,7 @@ def get_registered_case_detail(case_id: str):
                 RegisteredCases.birth_marks,
             ).where(RegisteredCases.id == case_id)
         ).all()
+        print(result)
         return result
 
 

@@ -1,25 +1,13 @@
 import streamlit as st
-import uuid
+
 from pages.helper import db_queries, match_algo, train_model
 from pages.helper.streamlit_helpers import require_login
 
 
 def case_viewer(registered_case_id, public_case_id):
     try:
-        # Convert string IDs to UUID objects
-        try:
-            # Try to convert to UUID - this handles both string and UUID inputs
-            registered_uuid = uuid.UUID(str(registered_case_id))
-            public_uuid = uuid.UUID(str(public_case_id))
-
-            # Convert back to string in the correct format for the database
-            registered_case_id = str(registered_uuid)
-            public_case_id = str(public_uuid)
-        except ValueError as e:
-            st.error(f"Invalid UUID format: {str(e)}")
-            return
-
-        # Get case details using the properly formatted UUID
+        # Use IDs directly as strings (no UUID conversion needed)
+        # Get case details using the string IDs
         case_details = db_queries.get_registered_case_detail(registered_case_id)[0]
         data_col, image_col = st.columns(2)
         for text, value in zip(
