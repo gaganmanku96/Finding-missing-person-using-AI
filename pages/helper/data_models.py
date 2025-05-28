@@ -7,7 +7,9 @@ from sqlmodel import Field, create_engine, SQLModel
 class PublicSubmissions(SQLModel, table=True):
     __table_args__ = {"extend_existing": True}
     # Changed: UUID -> str, uuid4 -> lambda: str(uuid4())
-    id: str = Field(primary_key=True, default_factory=lambda: str(uuid4()), nullable=False)
+    id: str = Field(
+        primary_key=True, default_factory=lambda: str(uuid4()), nullable=False
+    )
     submitted_by: str = Field(max_length=128, nullable=True)
     face_mesh: str = Field(nullable=False)  # JSON string of face mesh landmarks
     location: str = Field(max_length=128, nullable=True)
@@ -22,7 +24,9 @@ class PublicSubmissions(SQLModel, table=True):
 class RegisteredCases(SQLModel, table=True):
     __table_args__ = {"extend_existing": True}
     # Changed: UUID -> str, uuid4 -> lambda: str(uuid4())
-    id: str = Field(primary_key=True, default_factory=lambda: str(uuid4()), nullable=False)
+    id: str = Field(
+        primary_key=True, default_factory=lambda: str(uuid4()), nullable=False
+    )
     submitted_by: str = Field(max_length=64, nullable=False)
     name: str = Field(max_length=128, nullable=False)
     father_name: str = Field(max_length=128, nullable=True)
