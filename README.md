@@ -12,7 +12,6 @@ Hundreds of people (especially children go missing every day) in India. There ar
 - ### [Objective](#what-is-the-objective-of-this-project-and-how-will-it-help)
 - ### [Solution](#solution-projects-implementation)
 - ### [Installation](#how-to-run)
-- ### [What is left/not working?](#what-is-left)
 
 ## News Articles
 #### [Article 1](https://www.thehindu.com/society/indias-missing-children-what-the-whatsapp-rumours-dont-tell-you/article24641527.ece)
@@ -36,12 +35,13 @@ In such cases, the ideal approach is to go through CCTV footages and evidences. 
 - The app is compatible with Python 3.12+ and the latest Streamlit.
 
 ### Features
-- User authentication (with hashed passwords, Streamlit Authenticator)
-- Register new missing person cases (with image upload and face mesh extraction)
+- Register new missing person cases (with image upload and face mesh extraction via MediaPipe)
 - Public/mobile submission of potential matches
 - Case matching using face mesh features
 - Admin/user dashboard for case management
+- Data stored in SQLite for easy setup and portability
 
+> **Note:** User authentication is planned but not currently implemented. The project is ready for extension with Streamlit Authenticator or a custom solution.
 
 ## How to Run
 
@@ -63,23 +63,10 @@ In such cases, the ideal approach is to go through CCTV footages and evidences. 
 - The database will auto-create on first run (SQLite, file: `sqlite_database.db`).
 - Images are stored in the `resources/` folder.
 
-> **Note:** If you previously used the dlib version, delete any old database files and images, as the schema and features have changed.
-
-## What is left?
- - [x] Login (Authentication)
- - [x] Submit new case
- - [x] Mobile Application (to submit user photos)
- - [ ] View submitted cases
- - [ ] View confirmed cases
- - [ ] Unit tests
- 
-
 ## Developer:
 ## <a href="https://www.linkedin.com/in/gaganmanku96/">Gagandeep Singh</a>
 ## Endorse me at LinkedIn if this project was helpful. [![Linkedin](https://i.stack.imgur.com/gVE0j.png) LinkedIn](https://www.linkedin.com/in/gaganmanku96/)
 
 
 ## Vote of Thanks
-- Thanks to [Davis King](https://github.com/davisking) for creating dlib and for providing the trained facial feature
-  detection and face encoding models used in this project.
 - Thanks to the [MediaPipe](https://mediapipe.dev/) team for their open-source face mesh solution, now powering this project!
