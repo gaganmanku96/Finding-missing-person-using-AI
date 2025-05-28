@@ -1,0 +1,18 @@
+# https://blog.streamlit.io/streamlit-authenticator-part-1-adding-an-authentication-component-to-your-app/
+
+credentials:
+  usernames:
+    gagan:
+      email: gaganmanku96@gmail.com
+      name: Gagandeep Singh
+      city: Noida
+      area: Sector 128
+      role: Admin
+      password: '$2b$12$ByZbwxrcvCXVLQO4zjI95OteXToaBiwWDqujsHiKfeGzionz0VqAG' # abc
+cookie:
+  expiry_days: 1
+  key: random_signature_key
+  name: random_cookie_name
+preauthorized:
+  emails:
+  - gaganmanku96@gmail.com

@@ -26,117 +26,44 @@ The objective of this project is to help Police and higher authorities to track 
 In such cases, the ideal approach is to go through CCTV footages and evidences. Again, this can be very time consuming and given the number of people that go missing everyday, it can be a challanage to keep up with it.<br>
 
 ## Solution (Project's Implementation)
-### 1. Registering New Cases
-The first step is to register a new case. The GUI application is built using <b>PyQT5</b> that allows you to collect all relevant information and store it in database <b>Postgres</b>.
-> Please ignore the SRK's image. It is just for the sake of project :)
 
-![New Case Window](resources/new_case.PNG)
+### 2025 Major Update: Migration to MediaPipe Face Mesh
+- The project has migrated from dlib-based facial landmark/encoding to **MediaPipe Face Mesh** for all facial feature extraction and matching.
+- All code and database logic now use MediaPipe landmarks, making the app easier to run and maintain (no dlib dependency).
+- Registration and matching flows are updated to use face mesh data (stored as JSON in the database).
+- All legacy dlib/face_encoding code and dependencies have been removed.
+- The database schema now expects a `face_mesh` column (string/JSON) for facial features.
+- The app is compatible with Python 3.12+ and the latest Streamlit.
 
-### 2. Waiting for Users to submit images
-So far we have only talked about 'how new cases will be registered', the next thing we have to do is to match these registered cases but who do we match it with? This is where ours Users come in. These users are common people like you and me who wants to make a change in the society.<br>
-The common people will use an application on their mobile to submit photos of people who they think have lost or found begging while keeping them their identity anonymous. The anonymous part is very important because they fear of local <i>Gundas</i> that might create trouble for them.<br>
-> Mobile Application
-![Mobile Application](resources/mobile_application.PNG)
+### Features
+- User authentication (with hashed passwords, Streamlit Authenticator)
+- Register new missing person cases (with image upload and face mesh extraction)
+- Public/mobile submission of potential matches
+- Case matching using face mesh features
+- Admin/user dashboard for case management
 
-> An android Application can also be build and used but I have very little experience in it.
-### 3. Matching Cases
-The next step is to match the case images and user submitted images. To match <b>KNN Algorithm </b> is used.
-![Main Application](resources/app_window.PNG)
 
-## How to run
-#### 1. With Docker (Easy)
-Prerequisites
-```
-Docker (docker-compose as well)
-```
-```
-$ git clone https://github.com/gaganmanku96/Finding-missing-person-using-AI
-$ cd Finding-missing-person-using-AI
-$ docker-compose up --build
-$ cd app
-$ pip install -r requirements.txt --no-cache-dir
-$ python login_window.py
-```
-At this point you'll see a window like this
-![Login Window](resources/login_screen.PNG)
+## How to Run
 
-> Default username: admin
-> Default password: admin
-> 
-> Login window makes sure that only authenticated can view the registered cases. Each user can only view the cases submitted by him.
-> NOTE: There is no concpet of superuser.
+1. Clone the repository and install dependencies:
+   ```bash
+   git clone https://github.com/gaganmanku96/Finding-missing-person-using-AI.git
+   cd Finding-missing-person-using-AI
+   pip install -r requirements.txt
+   ```
+2. Run the main web app:
+   ```bash
+   streamlit run Home.py
+   ```
+3. To use the mobile/public submission app:
+   ```bash
+   streamlit run mobile_app.py
+   ```
 
-After logging in you'll see the main screen through which you'll be able to submit cases.
+- The database will auto-create on first run (SQLite, file: `sqlite_database.db`).
+- Images are stored in the `resources/` folder.
 
-##### To run the mobile application:
-```
-$ cd mobile_app
-```
-or (if you are inside app dir) 
-```
-$ ../mobile_app
-```
-```
-$ python ui.py
-```
-After that you'll see a window like this<br>
-![mobile application](resources/mobile_application.PNG)
-
-You can this to submit user images or you can create your own mobile app.
-
-Once done you'll have to <b>Click on Refresh</b> button on train KNN Model and then on <b>Match</b> to start Matching Images.
-
-#### 2. Without Docker (Intermediate)
-Here are the step you have to do
-1. Install Postgres Database and replace the username and password in config/.env.file
-2. The next step is to run database and make sure it is working.
-```
-$ cd database
-$ pip install -r requirements.txt
-$ uvicorn main:app --port 8002
-```
-3. Next, the face encoding api
-```
-$ cd face_encoding
-$ pip install -r requirements.txt
-$ uvicorn main:app --port 8000
-```
-> If you are using non-conda environment like venv then it might give error while installing dlib library.
-4. Running  the application
-```
-$ cd app
-$ pip install -r requirements.txt
-$ python login.py
-```
-At this point you'll see a window like this
-![Login Window](resources/login_screen.PNG)
-
-> Default username: admin
-> Default password: admin
-> 
-> Login window makes sure that only authenticated can view the registered cases. Each user can only view the cases submitted by him.
-> NOTE: There is no concpet of superuser.
-
-After logging in you'll see the main screen through which you'll be able to submit cases.
-
-##### To run the mobile application:
-```
-$ cd mobile_app
-```
-or (if you are inside app dir) 
-```
-$ ../mobile_app
-```
-```
-$ python ui.py
-```
-After that you'll see a window like this<br>
-![mobile application](resources/mobile_application.PNG)
-
-You can this to submit user images or you can create your own mobile app.
-
-Once done you'll have to <b>Click on Refresh</b> button on train KNN Model and then on <b>Match</b> to start Matching Images.
-
+> **Note:** If you previously used the dlib version, delete any old database files and images, as the schema and features have changed.
 
 ## What is left?
  - [x] Login (Authentication)
@@ -155,3 +82,4 @@ Once done you'll have to <b>Click on Refresh</b> button on train KNN Model and t
 ## Vote of Thanks
 - Thanks to [Davis King](https://github.com/davisking) for creating dlib and for providing the trained facial feature
   detection and face encoding models used in this project.
+- Thanks to the [MediaPipe](https://mediapipe.dev/) team for their open-source face mesh solution, now powering this project!

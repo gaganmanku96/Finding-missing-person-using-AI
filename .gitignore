@@ -1,4 +1,4 @@
-.idea/
-__pycache__/
-test-images/
-.vscode/
+*.pyc
+__pycache__
+sqlite_database.db
+classifier.pkl

@@ -1,0 +1,11 @@
+scikit-learn>=1.3.0
+st_pages
+pandas>=2.1.0
+numpy>=1.26.0
+pillow
+streamlit
+jinja2
+opencv-python
+sqlmodel
+mediapipe
+streamlit-authenticator==0.4.2

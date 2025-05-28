@@ -1,0 +1,13 @@
+Starting Project:
+
+1. Open powershell in Admin Mode from windows search
+2. Type the following: Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope CurrentUser
+3. Enter 'A' to process if asked
+3. 2nd step is only needed once.
+4. In the project folder:
+	a. Double click and run: run_desktop_app.ps1
+	b. Double click and run: run_mobile_app.ps1
+	
+
+
+Refreshing database:

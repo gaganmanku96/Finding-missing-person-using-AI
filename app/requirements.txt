@@ -1,6 +1,0 @@
-psycopg2-binary
-pyqt5
-pandas
-numpy
-sklearn
-pillow
