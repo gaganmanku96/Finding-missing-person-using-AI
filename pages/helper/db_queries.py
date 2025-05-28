@@ -108,6 +108,7 @@ def get_public_case_detail(case_id: str):
 
 
 def get_registered_case_detail(case_id: str):
+    print(case_id)
     with Session(engine) as session:
         result = session.exec(
             select(
