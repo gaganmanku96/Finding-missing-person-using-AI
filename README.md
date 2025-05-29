@@ -14,10 +14,11 @@
 Hundreds of people (especially children go missing every day) in India. There are various <b>NGO's and Govt Initiatives</b> to help with it. This project tries to implement an  existing/new way to help.
 
 ### News Articles
-![alt text](./resources/image.png)
-![alt text](./resources/image-1.png)
-![alt text](./resources/image-2.png)
-![alt text](./resources/image-3.png)
+
+<img src="./resources/image.png" alt="News Article 1" width="400" height="100"/>
+<img src="./resources/image-1.png" alt="News Article 2" width="400" height="100"/>
+<img src="./resources/image-2.png" alt="News Article 3" width="400" height="100"/>
+<img src="./resources/image-3.png" alt="News Article 4" width="400" height="250"/>
 
 
 ## What is the objective of this Project and how will it help?
