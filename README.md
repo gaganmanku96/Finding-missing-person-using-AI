@@ -20,6 +20,21 @@ Hundreds of people (especially children go missing every day) in India. There ar
 <img src="./resources/image-2.png" alt="News Article 3" width="400" height="100"/>
 <img src="./resources/image-3.png" alt="News Article 4" width="400" height="250"/>
 
+### Screenshots
+
+<table>
+  <tr>
+    <td><img src="./resources/ss_image.png" width="200" alt="Description 1"></td>
+    <td><img src="./resources/ss_image-1.png" width="200" alt="Description 2"></td>
+    <td><img src="./resources/ss_image-2.png" width="200" alt="Description 3"></td>
+  </tr>
+  <tr>
+    <td><img src="./resources/ss_image-3.png" width="200" alt="Description 4"></td>
+    <td><img src="./resources/ss_image-4.png" width="200" alt="Description 5"></td>
+    <td><img src="./resources/ss_image-5.png" width="200" alt="Description 6"></td>
+  </tr>
+</table>
+
 
 ## What is the objective of this Project and how will it help?
 The objective of this project is to help Police and higher authorities to track down missing people quickly. The usual process to track a person is using investigation which requires time and experience (to ask right questions). Most of the time, investigation method works pretty well but it is time consuming and can be unsuccessful if the person (missing) has been shifted/moved to different location (city/country).<br>

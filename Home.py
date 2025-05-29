@@ -52,17 +52,17 @@ if st.session_state.get("authentication_status"):
     st.session_state["user"] = user_info["name"]
 
     st.write(
-        f'<p style="color:white; text-align:left; font-size:45px">{user_info["name"]}</p>',
+        f'<p style="color:grey; text-align:left; font-size:45px">{user_info["name"]}</p>',
         unsafe_allow_html=True,
     )
 
     st.write(
-        f'<p style="color:white; text-align:left; font-size:20px">{user_info["area"]}, {user_info["city"]}</p>',
+        f'<p style="color:grey; text-align:left; font-size:20px">{user_info["area"]}, {user_info["city"]}</p>',
         unsafe_allow_html=True,
     )
 
     st.write(
-        f'<p style="color:white; text-align:left; font-size:20px">{user_info["role"]}</p>',
+        f'<p style="color:grey; text-align:left; font-size:20px">{user_info["role"]}</p>',
         unsafe_allow_html=True,
     )
 
