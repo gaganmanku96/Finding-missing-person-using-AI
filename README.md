@@ -1,47 +1,50 @@
 # Find Missing Person using AI
 ![Issues](https://img.shields.io/github/issues/gaganmanku96/Finding-missing-person-using-AI) ![Stars](https://img.shields.io/github/stars/gaganmanku96/Finding-missing-person-using-AI?style=social)
-[![Linkedin](https://img.shields.io/badge/LinkedIn-0077B6?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/gaganmanku96/)
-[![Medium](https://img.shields.io/badge/Medium-12100F?style=for-the-badge&logo=medium&logoColor=white)](https://medium.com/@gaganmanku96)
 ![CodeRabbit Reviews](https://img.shields.io/coderabbit/prs/github/gaganmanku96/Finding-missing-person-using-AI?utm_source=oss&utm_medium=github&utm_campaign=gaganmanku96%2FFinding-missing-person-using-AI&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
+
+
+![Streamlit](https://img.shields.io/badge/Streamlit-000000?style=for-the-badge&logo=streamlit&logoColor=white&height=20)
+![MediaPipe](https://img.shields.io/badge/MediaPipe-000000?style=for-the-badge&logo=mediapipe&logoColor=white&height=20)
+![Python](https://img.shields.io/badge/Python-000000?style=for-the-badge&logo=python&logoColor=white&height=20)
+![SQLite](https://img.shields.io/badge/SQLite-000000?style=for-the-badge&logo=sqlite&logoColor=white&height=20)
+
+### Endorse me at LinkedIn if this project was helpful. [![Linkedin](https://i.stack.imgur.com/gVE0j.png) LinkedIn](https://www.linkedin.com/in/gaganmanku96/)
 
 
 Hundreds of people (especially children go missing every day) in India. There are various <b>NGO's and Govt Initiatives</b> to help with it. This project tries to implement an  existing/new way to help.
 
-## List of contents
-- ### [News Articles](#news-articles)
-- ### [Objective](#what-is-the-objective-of-this-project-and-how-will-it-help)
-- ### [Solution](#solution-projects-implementation)
-- ### [Installation](#how-to-run)
-
-## News Articles
-#### [Article 1](https://www.thehindu.com/society/indias-missing-children-what-the-whatsapp-rumours-dont-tell-you/article24641527.ece)
-![News Article 1](resources/news_1.PNG)
-#### [Article 2](https://www.deccanchronicle.com/nation/current-affairs/250518/indias-children-174-go-missing-every-day-half-untraced.html)
-![News Article 2](resources/news_2.PNG)
+### News Articles
+![alt text](./resources/image.png)
+![alt text](./resources/image-1.png)
+![alt text](./resources/image-2.png)
+![alt text](./resources/image-3.png)
 
 
 ## What is the objective of this Project and how will it help?
 The objective of this project is to help Police and higher authorities to track down missing people quickly. The usual process to track a person is using investigation which requires time and experience (to ask right questions). Most of the time, investigation method works pretty well but it is time consuming and can be unsuccessful if the person (missing) has been shifted/moved to different location (city/country).<br>
 In such cases, the ideal approach is to go through CCTV footages and evidences. Again, this can be very time consuming and given the number of people that go missing everyday, it can be a challanage to keep up with it.<br>
 
-## Solution (Project's Implementation)
+### Project Overview
 
-### 2025 Major Update: Migration to MediaPipe Face Mesh
-- The project has migrated from dlib-based facial landmark/encoding to **MediaPipe Face Mesh** for all facial feature extraction and matching.
-- All code and database logic now use MediaPipe landmarks, making the app easier to run and maintain (no dlib dependency).
-- Registration and matching flows are updated to use face mesh data (stored as JSON in the database).
-- All legacy dlib/face_encoding code and dependencies have been removed.
-- The database schema now expects a `face_mesh` column (string/JSON) for facial features.
-- The app is compatible with Python 3.12+ and the latest Streamlit.
+Thousands of people, especially children, go missing every day in India. Despite efforts from NGOs and government initiatives, timely recovery remains a challenge. Traditional investigative methods, while effective, can be slow and resource-intensive. This project introduces an **AI-assisted platform** designed to expedite the process of locating missing individuals by:
 
-### Features
-- Register new missing person cases (with image upload and face mesh extraction via MediaPipe)
-- Public/mobile submission of potential matches
-- Case matching using face mesh features
-- Admin/user dashboard for case management
-- Data stored in SQLite for easy setup and portability
+- Leveraging advanced facial recognition using **MediaPipe Face Mesh**.
+- Enabling rapid scanning of large volumes of images (e.g., CCTV, public submissions).
+- Providing accessible web and mobile interfaces for authorities and the public.
 
-> **Note:** User authentication is planned but not currently implemented. The project is ready for extension with Streamlit Authenticator or a custom solution.
+
+### Key Features
+
+- **Seamless Registration**  
+  Easily register new missing person cases, including image uploads with automated facial feature extraction.
+- **Efficient Matching**  
+  Match submitted images against the database using face mesh data, reducing manual review burden.
+- **Multi-User Dashboards**  
+  Admin and user interfaces for managing, updating, and monitoring cases.
+- **Public Engagement**  
+  Mobile and web submission portals for sighting reports.
+- **Lightweight & Portable**  
+  All data is stored in SQLite; ready-to-run with minimal setup.
 
 ## How to Run
 
@@ -63,10 +66,12 @@ In such cases, the ideal approach is to go through CCTV footages and evidences. 
 - The database will auto-create on first run (SQLite, file: `sqlite_database.db`).
 - Images are stored in the `resources/` folder.
 
-## Developer:
-## <a href="https://www.linkedin.com/in/gaganmanku96/">Gagandeep Singh</a>
-## Endorse me at LinkedIn if this project was helpful. [![Linkedin](https://i.stack.imgur.com/gVE0j.png) LinkedIn](https://www.linkedin.com/in/gaganmanku96/)
+### Use Cases
+
+- Law enforcement agencies reviewing large volumes of CCTV footage.
+- NGOs and government bodies searching for missing children/persons.
+- Crowdsourced submissions from the general public via mobile or web.
 
 
-## Vote of Thanks
+### Vote of Thanks
 - Thanks to the [MediaPipe](https://mediapipe.dev/) team for their open-source face mesh solution, now powering this project!
